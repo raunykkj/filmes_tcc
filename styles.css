@@ -1,0 +1,122 @@
+/* Reset some default styles */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #141414;
+    color: #ffffff;
+    padding: 1rem 0;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 1.5rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.banner{
+
+}
+
+.banner .container{
+    flex:1;
+    display: flex;
+    background-image: url('./img/banner.jpg');
+    background-size: cover; /* Redimensionar a imagem para cobrir o elemento */
+    background-repeat: no-repeat; /* Não repetir a imagem de fundo */
+    background-position: center; /* Posição central da imagem */
+    height: 100vh; /* Altura igual à altura da viewport */
+    color: #ffffff;
+}
+
+.banner .container .leftSide{
+    flex:1;
+}
+
+
+
+.banner .container .rightSide{
+    flex:1;
+}
+
+.hero {
+    background-image: url('hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #000;
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #0f78af;
+    color: #ffffff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.featured {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.featured h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: #141414;
+    color: #ffffff;
+}
