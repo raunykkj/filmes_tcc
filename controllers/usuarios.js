@@ -4,7 +4,11 @@ const db = require('../database/connection');
 module.exports = {
     async listarUsuarios(request, response) {
         try {
-            return response.status(200).json({confirma: 'Listar Usuarios'});
+            //armazena instruções SQL na constante
+            const sql = 'SELECT usu_cod, usu_email, usu_nome, usu_dtnasc, usu_celular, usu_senha, usu_adm from USUARIOS';
+            //executa instruções SQL e armazena o resultado na variavel
+            const usuarios = await db.query(sql);
+            return response.status(200).json({confirma: usuarios});
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }

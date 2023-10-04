@@ -4,7 +4,11 @@ const db = require('../database/connection');
 module.exports = {
     async listarPerfis(request, response) {
         try {
-            return response.status(200).json({confirma: 'Listar Perfis'});
+            //armazena instruções SQL na constante
+            const sql = 'SELECT perf_cod, usu_cod, perf_foto, perf_nome from PERFIS';
+            //executa instruções SQL e armazena o resultado na variavel
+            const perfis = await db.query(sql);
+            return response.status(200).json({confirma: perfis});
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }

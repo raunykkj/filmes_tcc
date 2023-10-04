@@ -4,7 +4,11 @@ const db = require('../database/connection');
 module.exports = {
     async listarFilmes(request, response) {
         try {
-            return response.status(200).json({confirma: 'Listar Filmes'});
+            //armazena instruções SQL na constante
+            const sql = 'SELECT fme_cod, fme_nome, fme_diretor, fme_lancamento, fme_genero, fme_sinopse, fme_duracao, fme_idioma, fme_classificacao, fme_estudio, fme_link from FILMES';
+            //executa instruções SQL e armazena o resultado na variavel
+            const filmes = await db.query(sql);
+            return response.status(200).json({confirma: filmes});
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }

@@ -4,7 +4,11 @@ const db = require('../database/connection');
 module.exports = {
     async listarAtores(request, response) {
         try {
-            return response.status(200).json({confirma: 'Listar Atores'});
+            //armazena instruções SQL na constante
+            const sql = 'SELECT at_cod, at_nome, at_dtnasc, at_img from ATORES';
+            //executa instruções SQL e armazena o resultado na variavel
+            const atores = await db.query(sql);
+            return response.status(200).json({confirma: atores});
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }
