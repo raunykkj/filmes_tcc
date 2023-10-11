@@ -8,7 +8,18 @@ module.exports = {
             const sql = 'SELECT perf_cod, usu_cod, perf_foto, perf_nome from PERFIS';
             //executa instruções SQL e armazena o resultado na variavel
             const perfis = await db.query(sql);
-            return response.status(200).json({confirma: perfis});
+
+            const nReg = perfis[0].length
+
+            return response.status(200).json(
+                {
+                    confirma: 'Sucesso',
+                    message: 'Perfis cadastrados',
+                    nItems: nReg,
+                    items: perfis[0]
+                }
+                    );
+
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }

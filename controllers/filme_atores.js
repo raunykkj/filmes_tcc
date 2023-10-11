@@ -8,7 +8,18 @@ module.exports = {
             const sql = 'SELECT fme_cod, at_cod, fme_at_papel from FILME_ATORES';
             //executa instruções SQL e armazena o resultado na variavel
             const filme_atores = await db.query(sql);
-            return response.status(200).json({confirma: filme_atores});
+
+            const nReg = filme_atores[0].length
+
+            return response.status(200).json(
+                {
+                    confirma: 'Sucesso',
+                    message: 'Filme_atores cadastrados',
+                    nItems: nReg,
+                    items: filme_atores[0]
+                }
+                    );
+
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }

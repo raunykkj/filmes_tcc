@@ -5,10 +5,21 @@ module.exports = {
     async listarUsuarios_Filmes(request, response) {
         try {
             //armazena instruções SQL na constante
-            const sql = 'SELECT usfm_cod, perf_cod, fme_cod, usfm_curtida, usfm_assitido, usfm_assistindo, ufsm_tempo, ufsm_comentario, ufsm_moderacao from USUARIOS_FILMES';
+            const sql = 'SELECT usfm_cod, perf_cod, fme_cod, usfm_curtida = 1 as usfm_curtida, usfm_assitido = 1 as usfm_assitido, usfm_assistindo = 1 as usfm_assistindo, ufsm_tempo, ufsm_comentario, ufsm_moderacao= 1 as ufsm_moderacao from USUARIOS_FILMES';
             //executa instruções SQL e armazena o resultado na variavel
             const usuarios_filmes = await db.query(sql);
-            return response.status(200).json({confirma: usuarios_filmes});
+
+            const nReg = usuarios_filmes[0].length
+
+            return response.status(200).json(
+                {
+                    confirma: 'Sucesso',
+                    message: 'Usuarios_filmes cadastrados',
+                    nItems: nReg,
+                    items: usuarios_filmes[0]
+                }
+                    );
+
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }
