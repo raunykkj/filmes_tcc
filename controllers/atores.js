@@ -26,7 +26,28 @@ module.exports = {
     },
     async CadastrarAtores(request, response) {
         try {
-            return response.status(200).json({confirma: 'Cadastrar Atores'});
+
+            //parâmetros recebidos pelo corpo da requisição
+            const { at_nome, at_dtnasc, at_img } = request.body;
+
+            const sql = 'INSERT INTO ATORES (at_nome, at_dtnasc, at_img) VALUES (?,?,?);';
+
+            const values = [at_nome, at_dtnasc, at_img];
+
+            const confirmacao = await db.query(sql,values);
+
+            //identificação do ID do registro inserido 
+            const at_cod = confirmacao[0].insertId
+
+            //responde a requisição com a mensagem confirmando o ID do registro inserido
+            return response.status(200).json(
+            {
+                confirma: 'Sucesso',
+                message: 'Cadastro de filmes efetuado',
+                at_cod
+            }
+                
+                );
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }

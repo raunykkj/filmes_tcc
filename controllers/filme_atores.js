@@ -25,8 +25,27 @@ module.exports = {
         }
     },
     async CadastrarFilme_Atores(request, response) {
-        try {
-            return response.status(200).json({confirma: 'Cadastrar Filme_atores'});
+            try {
+    
+                //parâmetros recebidos pelo corpo da requisição
+                const { fme_cod, at_cod, fme_at_papel } = request.body;
+    
+                const sql = 'INSERT INTO FILMES (fme_cod, at_cod, fme_at_papel) VALUES (?,?,?);';
+    
+                const values = [fme_cod, at_cod, fme_at_papel];
+    
+                const confirmacao = await db.query(sql,values);
+    
+                //responde a requisição com a mensagem confirmando o ID do registro inserido
+                return response.status(200).json(
+                {
+                    confirma: 'Sucesso',
+                    message: 'Cadastro de filmes efetuado',
+                    fme_cod,
+                    at_cod
+                }
+                    
+                    );
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }
