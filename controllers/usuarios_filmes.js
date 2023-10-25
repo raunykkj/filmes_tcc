@@ -26,11 +26,31 @@ module.exports = {
     },
     async CadastrarUsuarios_Filmes(request, response) {
         try {
-            return response.status(200).json({confirma: 'Cadastrar Usuarios_filmes'});
-        } catch (error) {
-            return response.status(500).json({confirma: 'Erro', message: error});
-        }
-    },
+
+            //parâmetros recebidos pelo corpo da requisição
+            const {perf_cod, fme_cod, usfm_curtida, usfm_assitido, usfm_assistindo, ufsm_tempo, ufsm_comentario, ufsm_moderacao} = request.body;
+
+            const sql = 'INSERT INTO USUARIOS_FILMES (perf_cod, fme_cod, usfm_curtida, usfm_assitido, usfm_assistindo, ufsm_tempo, ufsm_comentario, ufsm_moderacao) VALUES (?,?,?,?,?,?,?,?);';
+
+            const values = [perf_cod, fme_cod, usfm_curtida, usfm_assitido, usfm_assistindo, ufsm_tempo, ufsm_comentario, ufsm_moderacao];
+
+            const confirmacao = await db.query(sql,values);
+
+            const usfm_cod = confirmacao[0].insertId
+
+            //responde a requisição com a mensagem confirmando o ID do registro inserido
+            return response.status(200).json(
+            {
+                confirma: 'Sucesso',
+                message: 'Cadastro de filmes efetuado',
+                usfm_cod
+            }
+                
+                );
+    } catch (error) {
+        return response.status(500).json({confirma: 'Erro', message: error});
+    }
+},
     async EditarUsuarios_Filmes(request, response) {
         try {
             return response.status(200).json({confirma: 'Editar Usuarios_filmes'});
