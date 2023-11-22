@@ -53,14 +53,47 @@ module.exports = {
 },
     async EditarUsuarios_Filmes(request, response) {
         try {
-            return response.status(200).json({confirma: 'Editar Usuarios_filmes'});
+            //parâmetros recebidos pelo corpo da requisição
+            const { perf_cod, fme_cod, usfm_curtida, usfm_assitido, usfm_assistindo, ufsm_tempo, ufsm_comentario, ufsm_moderacao } = request.body;
+    
+            const { usfm_cod } = request.params;
+    
+            const sql = 'UPDATE usuarios_filmes SET perf_cod = ?, fme_cod = ?, usfm_curtida = ?, usfm_assitido = ?, usfm_assistindo = ?, ufsm_tempo = ?, ufsm_comentario = ?, ufsm_moderacao = ? WHERE usfm_cod = ?;';
+    
+            const values = [ perf_cod, fme_cod, usfm_curtida, usfm_assitido, usfm_assistindo, ufsm_tempo, ufsm_comentario, ufsm_moderacao, usfm_cod ];
+    
+            const atualizacao = await db.query(sql,values);
+    
+            //responde a requisição com a mensagem confirmando o ID do registro inserido
+            return response.status(200).json(
+            {
+                confirma: 'Sucesso',
+                message: 'Usuario_filme ' + usfm_cod + " atualizado com sucesso!",
+                registrosAtualizados: atualizacao[0].affectRows
+            }
+                
+                );
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }
     },
     async ApagarUsuarios_Filmes(request, response) {
-        try {
-            return response.status(200).json({confirma: 'Apagar Usuarios_filmes'});
+        try { 
+            // parâmetro passado via url na chamada da api pelo front-end
+            const {usfm_cod} = request.params;
+            // comando de exclusão
+            const sql = ' DELETE FROM usuarios_filmes WHERE usfm_cod = ?';
+            // definição de array com os pârametros que receberam os valores do front-end
+            const values = [ usfm_cod];
+            // executa a instrução de exclusão no banco de dados
+            await db.query(sql, values);
+            //mensagem de retorno no formato JSON
+            return response.status(200).json(
+                {
+                    confirma: 'Sucesso',
+                    message:'Usuario_filme com id ' + usfm_cod + ' excluído com sucesso'
+                }
+            );
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }

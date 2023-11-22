@@ -53,15 +53,49 @@ module.exports = {
         }
     },
     async EditarAtores(request, response) {
-        try {
-            return response.status(200).json({confirma: 'Editar Atores'});
+    try {
+
+        //parâmetros recebidos pelo corpo da requisição
+        const { at_nome, at_dtnasc, at_img } = request.body;
+
+        const { at_cod } = request.params;
+
+        const sql = 'UPDATE atores SET at_nome = ?, at_dtnasc = ?, at_img = ? WHERE at_cod = ?;'
+
+        const values = [ at_nome, at_dtnasc, at_img, at_cod ];
+
+        const atualizacao = await db.query(sql,values);
+
+        //responde a requisição com a mensagem confirmando o ID do registro inserido
+        return response.status(200).json(
+        {
+            confirma: 'Sucesso',
+            message: 'Atores ' + at_cod + " atualizado com sucesso!",
+            registrosAtualizados: atualizacao[0].affectRows
+        }
+            
+            );
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }
     },
     async ApagarAtores(request, response) {
-        try {
-            return response.status(200).json({confirma: 'Apagar Atores'});
+        try { 
+            // parâmetro passado via url na chamada da api pelo front-end
+            const {at_cod} = request.params;
+            // comando de exclusão
+            const sql = ' DELETE FROM atores WHERE at_cod = ?';
+            // definição de array com os pârametros que receberam os valores do front-end
+            const values = [ at_cod ];
+            // executa a instrução de exclusão no banco de dados
+            await db.query(sql, values);
+            //mensagem de retorno no formato JSON
+            return response.status(200).json(
+                {
+                    confirma: 'Sucesso',
+                    message:'Ator com id ' + at_cod + ' excluído com sucesso'
+                }
+            );
         } catch (error) {
             return response.status(500).json({confirma: 'Erro', message: error});
         }
