@@ -30,7 +30,7 @@ module.exports = {
                 //parâmetros recebidos pelo corpo da requisição
                 const { fme_cod, at_cod, fme_at_papel } = request.body;
     
-                const sql = 'INSERT INTO FILMES (fme_cod, at_cod, fme_at_papel) VALUES (?,?,?);';
+                const sql = 'INSERT INTO FILME_ATORES (fme_cod, at_cod, fme_at_papel) VALUES (?,?,?);';
     
                 const values = [fme_cod, at_cod, fme_at_papel];
     
